@@ -10,10 +10,22 @@ int main()
     {
         double x = delta_x * i;
         ys[i] = x*x;
-    }   
-    DiscreteFunction DF(ys, 0, 1);
+    }
 
-    std::cout << DF.integrate() << std::endl;
+    
+    std::unique_ptr<Integrator> integrator_trap = std::make_unique<TrapeziumIntegrator>();
+
+    DiscreteFunction DF_trap(ys, 0, 1, integrator_trap);
+
+    std::cout << DF_trap.integrate() << std::endl;
+
+
+    std::unique_ptr<Integrator> integrator_simp = std::make_unique<SimpsonIntegrator>();
+
+    DiscreteFunction DF_simp(ys, 0, 1, integrator_simp);
+
+    std::cout << DF_simp.integrate() << std::endl;
+
 
     return 0;
 }
